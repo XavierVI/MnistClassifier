@@ -2,19 +2,13 @@ import torch
 import torch.nn as nn
 import torchvision
 
+"""
+Notes: pixel size is 28x28 = 784
+"""
 class MnistClassifier(nn.Module):
   def __init__(self):
-    super(MnistClassifier, self).__init__()
-    self.conv1 = nn.Conv2d(1, 10, kernel_size=5)
-    self.conv2 = nn.Conv2d(10, 20, kernel_size=5)
-    self.conv2_drop = nn.Dropout2d()
-    self.fc1 = nn.Linear(320, 50)
-    self.fc2 = nn.Linear(50, 10)
-
-  def forward(self, x):
-    x = nn.functional.relu(nn.functional.max_pool2d(self.conv1(x), 2))
-    x = nn.functional.relu(nn.functional.max_pool2d(self.conv2_drop(self.conv2(x)), 2))
-    x = x.view(-1, 320)
-    x = nn.functional.relu(self.fc1(x))
-    x = nn.functional.dropout(x, training=self.training)
-    x = self.fc2(x)
+    super().__init__()
+    pixel_size = 784
+    self.L1 = nn.Linear(pixel_size, 128, bias=False)
+    self.L2 = nn.Linear(128, 32, bias=False)
+    self.L3 = nn.Linear(32, 1, bias=False)
