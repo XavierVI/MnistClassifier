@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torchvision
+import os
 
 """
 Notes: pixel size is 28x28 = 784
