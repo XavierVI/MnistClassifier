@@ -1,6 +1,7 @@
-data
+datasets
 learning-pytorch
 saved_models
 __pycache__
 .vscode
+models
 NOTES.md
