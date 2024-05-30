@@ -3,16 +3,19 @@ import torch.nn as nn
 class ConvModel(nn.Module):
     def __init__(self):
         super().__init__()
-        # nn.Sequential is an ordered container of modules
-        self.linear_stack = nn.Sequential(
-            nn.Conv2d(28, 28, 5, bias=True),
-            nn.Linear(28, 10, bias=True),
+        self.conv_layers = nn.Sequential(
+            nn.Conv2d(1, 1, kernel_size=2, bias=True),
             nn.ReLU(),
+            nn.MaxPool2d(kernel_size=2),
+            nn.Flatten(),
+            nn.Linear(169, 169, bias=True),
+            nn.ReLU(),
+            nn.Linear(169, 10, bias=True),
+            nn.Softmax()
         )
   
     def forward(self, x):
-        x = self.flatten(x) # flatten inputs
-        prediction = self.linear_stack(x) # make prediction
+        prediction = self.conv_layers(x)
         return prediction
   
     def __str__(self):
@@ -35,3 +38,6 @@ class LinearModel(nn.Module):
         x = self.flatten(x) # flatten inputs
         prediction = self.linear_stack(x) # make prediction
         return prediction
+    
+    def __str__(self):
+        return 'LinearModel'

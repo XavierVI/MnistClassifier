@@ -86,7 +86,7 @@ testing_data = datasets.MNIST(
 training_loader = DataLoader(training_data, batch_size=64, shuffle=True)
 testing_loader = DataLoader(testing_data, batch_size=64, shuffle=True)
 
-model = LinearModel().to(device)
+model = ConvModel().to(device)
 optimizer = torch.optim.SGD(model.parameters(), weight_decay=0.01, 
                             momentum=0.9, lr=0.1)
 loss_fn = nn.CrossEntropyLoss()
