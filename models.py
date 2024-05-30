@@ -10,8 +10,7 @@ class ConvModel(nn.Module):
             nn.Flatten(),
             nn.Linear(169, 169, bias=True),
             nn.ReLU(),
-            nn.Linear(169, 10, bias=True),
-            nn.Softmax()
+            nn.Linear(169, 10, bias=True)
         )
   
     def forward(self, x):
