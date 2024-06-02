@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-import torch.optim as optim
 import torchvision.datasets as datasets
 from torchvision.transforms import ToTensor
 from torch.utils.data import DataLoader
@@ -8,20 +7,31 @@ from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
 
 from models import *
-import Trainer
+from Trainer import Trainer
 
 import os
+import sys
 
-print('PyTorch version: {torch.__version__}')
-print('*'*40)
-print('CUDA version: ')
-print(torch.version.cuda)
-print('*'*40)
-print(f'CUDNN version: {torch.backends.cudnn.version()}')
-print(f'Available GPU devices: {torch.cuda.device_count()}')
+batch_size = 64
+epochs = 10
+momentum = 0.9
+learning_rate = 0.001
 device = "cuda" if torch.cuda.is_available() else "cpu"
-print('Using {device} device')
+
+print(f'Using {device} device')
 print(f'Device Name: {torch.cuda.get_device_name()}')
+
+model_name = sys.argv[1]
+
+# Defining the model
+if model_name == 'ConvModel':
+    model = ConvModel()
+elif model_name == 'PyTorchExample':
+    model = PytorchExample()
+else:
+    model = LinearModel()
+
+model = model.to(device)
 
 # Loading the dataset
 training_data = datasets.MNIST(
@@ -39,16 +49,18 @@ testing_data = datasets.MNIST(
 training_loader = DataLoader(training_data, batch_size=64, shuffle=True)
 testing_loader = DataLoader(testing_data, batch_size=64, shuffle=True)
 
-# Defining the model
-model = ConvModel().to(device)
-
 # Training
-optimizer = torch.optim.SGD(model.parameters(), weight_decay=0.01, 
-                            momentum=0.9, lr=0.1)
+optimizer = torch.optim.SGD(
+    model.parameters(), 
+    momentum=momentum,
+    lr=learning_rate   
+)
 loss_fn = nn.CrossEntropyLoss()
 trainer = Trainer()
-
 epochs = 5
+
+print(f"Training {model} for {epochs} epochs")
+
 for t in range(epochs):
     print(f"Epoch {t+1}\n-------------------------------")
     trainer.train(training_loader, model, loss_fn, optimizer, device)
