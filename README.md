@@ -1,5 +1,9 @@
 # About the project
-This project was created to learn the basics of pytorch.
+This project was created to learn the basics of PyTorch.
 
-# Usage
-The file `models.py` contains the definition of each model and `train.py` will train the specified model and save it in the `models` folder.
+# Learning Goals
+- Learn how how define neural networks in PyTorch and train them on a dataset.
+- Learn how to load and save models in PyTorch.
+- Learn how to train neural networks on GPU using CUDA.
+- Learn how to implement a learning rate scheduler in PyTorch.
+- Learn how to integrate TensorBoard with PyTorch.
