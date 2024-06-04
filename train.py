@@ -22,10 +22,12 @@ print(f'Device Name: {torch.cuda.get_device_name()}')
 network_name = sys.argv[1]
 
 # Defining the network
-if network_name == 'ConvolutionalNetwork':
+if network_name == 'ConvNet':
     network = ConvolutionalNetwork()
-else:
+elif network_name == 'LinearNet':
     network = LinearNetwork()
+else:
+    raise Exception('Invalid network name')
 
 network = network.to(device)
 
@@ -73,4 +75,5 @@ if not os.path.exists(directory): os.makedirs(directory)
 torch.save(network.state_dict(), f=directory+f"/model.pth")
 print("Saved PyTorch Model State to model.pth")
 
+print("Displaying Training and Testing loss")
 trainer.plot_training_testing_loss()

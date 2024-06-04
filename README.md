@@ -1,5 +1,5 @@
 # About the project
-This project was created to learn the basics of PyTorch.
+This project was created to learn the basics of PyTorch and convolutional neural networks.
 
 # Learning Goals
 - Learn how how define neural networks in PyTorch and train them on a dataset.
