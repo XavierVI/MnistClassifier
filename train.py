@@ -13,7 +13,7 @@ import os
 import sys
 
 batch_size = 64
-epochs = 5
+epochs = 50
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 print(f'Using {device} device')
@@ -44,9 +44,20 @@ testing_data = datasets.MNIST(
     download=True,
     transform=ToTensor()
 )
-training_loader = DataLoader(training_data,batch_size=batch_size,shuffle=True)
-testing_loader = DataLoader(testing_data,batch_size=batch_size,shuffle=True)
-
+training_loader = DataLoader(
+    training_data,
+    batch_size=batch_size,
+    shuffle=True,
+    num_workers=4,
+    pin_memory=device == "cuda"
+)
+testing_loader = DataLoader(
+    testing_data,
+    batch_size=batch_size,
+    shuffle=True,
+    num_workers=4,
+    pin_memory=device == "cuda"
+)
 
 print(f"Training {network} for {epochs} epochs")
 
@@ -62,4 +73,4 @@ if not os.path.exists(directory): os.makedirs(directory)
 torch.save(network.state_dict(), f=directory+f"/model.pth")
 print("Saved PyTorch Model State to model.pth")
 
-trainer.plot_training_losses(True, filename=f'{os.curdir}/figures/{network}.png')
+trainer.plot_training_testing_loss()
