@@ -4,8 +4,6 @@ import torchvision.datasets as datasets
 from torchvision.transforms import ToTensor
 from torch.utils.data import DataLoader
 
-import matplotlib.pyplot as plt
-
 from models import *
 from Trainer import Trainer
 
@@ -23,7 +21,7 @@ network_name = sys.argv[1]
 
 # Defining the network
 if network_name == 'ConvNet':
-    network = ConvolutionalNetwork()
+    network = ConvolutionalNetwork(train=True)
 elif network_name == 'LinearNet':
     network = LinearNetwork()
 else:

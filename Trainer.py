@@ -58,8 +58,7 @@ class Trainer():
         test_loss /= num_batches
         correct /= size
 
-        print(f"Test Error: \n Accuracy: {
-              (100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
+        print(f"Test Error: \n Accuracy: {(100*correct):>0.1f}%, Avg loss: {test_loss:>8f} \n")
         self.avg_testing_loss.append(test_loss)
         mean = sum(self.training_losses) / len(self.training_losses)
         self.avg_training_loss.append(mean)

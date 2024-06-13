@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class ConvolutionalNetwork(nn.Module):
-    def __init__(self):
+    def __init__(self, train=False):
         super().__init__()
         self.conv_layer = nn.Conv2d(
             in_channels=1,
@@ -14,17 +14,21 @@ class ConvolutionalNetwork(nn.Module):
         self.dropout1 = nn.Dropout(0.25)
         self.linear1 = nn.Linear(5408, 128)
         self.linear2 = nn.Linear(128, 10)
+        if train:
+            self.start_dim = 1
+        else:
+            self.start_dim = 0
   
     def forward(self, x):
         x = self.conv_layer(x)
         x = F.relu(x)
-        x = F.max_pool2d(x, 2)
+        x = F.max_pool2d(x, kernel_size=2)
         # x = self.dropout1(x)
-        x = torch.flatten(x, 1)
+        x = torch.flatten(x, start_dim=self.start_dim)
         x = self.linear1(x)
         x = F.relu(x)
         x = self.linear2(x)
-        output = F.softmax(x, dim=1)
+        output = F.softmax(x, dim=self.start_dim)
         return output
   
     def __str__(self):
